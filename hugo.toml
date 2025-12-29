@@ -1,0 +1,4 @@
+baseURL = 'https://angryguy-ca.github.io/angryguy/'
+languageCode = 'en-us'
+title = 'AngryGuy'
+theme = 'terminal'
