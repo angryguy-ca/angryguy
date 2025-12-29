@@ -1,0 +1,12 @@
+# Hugo default output directory
+/public/
+
+# Hugo cache directory
+/resources/_gen/
+
+# Temporary lock file while building
+/.hugo_build.lock
+
+# OS files
+.DS_Store
+Thumbs.db
