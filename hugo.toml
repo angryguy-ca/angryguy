@@ -1,4 +1,7 @@
 baseURL = 'https://angryguy-ca.github.io/angryguy/'
 languageCode = 'en-us'
-title = 'AngryGuy'
-theme = 'terminal'
+title = 'Angryguy'
+theme = 'compose'
+[caches]
+  [caches.images]
+    dir = ':cacheDir/images'
