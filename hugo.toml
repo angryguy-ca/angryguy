@@ -1,7 +1,3 @@
-baseURL = 'https://angryguy-ca.github.io/angryguy/'
+baseURL = 'https://example.org/'
 languageCode = 'en-us'
-title = 'Angryguy'
-theme = 'compose'
-[caches]
-  [caches.images]
-    dir = ':cacheDir/images'
+title = 'My New Hugo Site'
