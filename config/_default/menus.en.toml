@@ -16,7 +16,7 @@
   weight = 10
 
 [[main]]
-  name = "Articles"
+  name = "Posts"
   pageRef = "/posts"
   weight = 20
 
@@ -26,9 +26,14 @@
   weight = 30
 
 [[main]]
+  name = "Docs"
+  pageRef = "/docs"
+  weight = 40
+
+[[main]]
   name = "About"
   pageRef = "/about"
-  weight = 40
+  weight = 50
 
 [[main]]
   name = "Members"
