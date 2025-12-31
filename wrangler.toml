@@ -1,7 +1,7 @@
 name = "angryguy"
-compability_date = "2025-12-29"
+compatibility_date = "2025-12-29"
 
-[buiild]
+[build]
 command = "./build.sh"
 
 [assets]
