@@ -1,0 +1,13 @@
+{
+    "name": "Steve Snow",
+    "image" : "img/avatar.png",
+    "bio": "Principal Product Manager @ Docker",
+    "social": [
+        { "email": "mailto:admin@angryguy.win" },
+        { "linkedin": "https://linkedin.com/" },
+        { "x-twitter": "https://twitter.com/" },
+        { "github": "https://github.com/" },
+        { "instagram": "https://instagram.com/" },
+        { "goodreads": "http://goodreads.com/" }
+    ]
+}
