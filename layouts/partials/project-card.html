@@ -1,0 +1,72 @@
+{{/* Project card partial for /projects list */}}
+<article class="rounded-2xl border border-neutral-200 dark:border-neutral-800 overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+  {{ $cover := .Params.cover }}
+  {{ if $cover }}
+    <a href="{{ .RelPermalink }}">
+      <img
+        src="{{ $cover | relURL }}"
+        alt="{{ .Title }}"
+        class="w-full h-44 object-cover"
+        loading="lazy"
+      />
+    </a>
+  {{ end }}
+
+  <div class="p-4 space-y-3">
+    <div class="flex items-start justify-between gap-3">
+      <h2 class="text-lg font-semibold leading-tight">
+        <a href="{{ .RelPermalink }}" class="hover:underline">
+          {{ .Title }}
+        </a>
+      </h2>
+
+    {{ with .Params.status }}
+    {{ $label := . }}
+    {{ if eq . "in-progress" }}{{ $label = "In progress" }}{{ end }}
+    {{ if eq . "planned" }}{{ $label = "Planned" }}{{ end }}
+    {{ if eq . "complete" }}{{ $label = "Completed" }}{{ end }}
+
+    <span class="text-xs px-2 py-1 rounded-full border border-neutral-200 dark:border-neutral-700 whitespace-nowrap">
+        {{ $label }}
+    </span>
+    {{ end }}
+    </div>
+
+    {{ with .Params.summary }}
+      <p class="text-sm text-neutral-600 dark:text-neutral-400">
+        {{ . }}
+      </p>
+    {{ else }}
+      {{ with .Summary }}
+        <p class="text-sm text-neutral-600 dark:text-neutral-400">
+          {{ . }}
+        </p>
+      {{ end }}
+    {{ end }}
+
+    {{ with .Params.tags }}
+      <div class="flex flex-wrap gap-2">
+        {{ range . }}
+          <span class="text-xs px-2 py-1 rounded-full bg-neutral-100 dark:bg-neutral-800">
+            {{ . }}
+          </span>
+        {{ end }}
+      </div>
+    {{ end }}
+
+    {{ with .Params.links }}
+      <div class="pt-1 space-y-1">
+        <div class="text-xs uppercase tracking-wide text-neutral-500">Links</div>
+        <ul class="text-sm list-disc list-inside">
+          {{ range . }}
+            <li>
+              <a href="{{ .url }}" class="hover:underline" {{ if strings.HasPrefix .url "http" }}target="_blank" rel="noopener noreferrer"{{ end }}>
+                {{ .name }}
+              </a>
+            </li>
+          {{ end }}
+        </ul>
+      </div>
+    {{ end }}
+  </div>
+</article>

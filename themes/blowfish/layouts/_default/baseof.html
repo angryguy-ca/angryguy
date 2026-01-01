@@ -20,7 +20,7 @@
         {{ i18n "nav.skip_to_main" }}
       </a>
     </div>
-    {{ $header := print "header/" site.Params.header.layout ".html" }}
+    {{ $header := printf "header/%s.html" site.Params.header.layout }}
     {{ if templates.Exists ( printf "partials/%s" $header ) }}
       {{ partial $header . }}
     {{ else }}

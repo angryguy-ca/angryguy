@@ -1,0 +1,80 @@
+{{ define "main" }}
+  <div class="max-w-7xl mx-auto px-4">
+    <header class="pt-8 pb-6">
+      <h1 class="text-3xl font-bold">{{ .Title }}</h1>
+      {{ with .Params.description }}
+        <p class="mt-2 text-neutral-600 dark:text-neutral-400">{{ . }}</p>
+      {{ end }}
+    </header>
+
+  {{ $all := .Pages.ByDate.Reverse }}
+
+  {{ $inprogress := where $all "Params.status" "in-progress" }}
+  {{ $planned := where $all "Params.status" "planned" }}
+  {{ $complete := where $all "Params.status" "complete" }}
+
+  {{ $known := union (union $inprogress $planned) $complete }}
+  {{ $unknown := complement $known $all }}
+
+  {{ if not (gt (len $all) 0) }}
+    <p>No projects yet. Add a project under <code>content/projects/</code>.</p>
+  {{ else }}
+
+    {{ if gt (len $inprogress) 0 }}
+      <section class="mb-10">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-xl font-semibold">In Progress</h2>
+          <span class="text-sm text-neutral-500">{{ len $inprogress }}</span>
+        </div>
+        <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {{ range $inprogress }}
+            {{ partial "project-card.html" . }}
+          {{ end }}
+        </div>
+      </section>
+    {{ end }}
+
+    {{ if gt (len $planned) 0 }}
+      <section class="mb-10">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-xl font-semibold">Planned</h2>
+          <span class="text-sm text-neutral-500">{{ len $planned }}</span>
+        </div>
+        <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {{ range $planned }}
+            {{ partial "project-card.html" . }}
+          {{ end }}
+        </div>
+      </section>
+    {{ end }}
+
+    {{ if gt (len $complete) 0 }}
+      <section class="mb-10">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-xl font-semibold">Completed</h2>
+          <span class="text-sm text-neutral-500">{{ len $complete }}</span>
+        </div>
+        <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {{ range $complete }}
+            {{ partial "project-card.html" . }}
+          {{ end }}
+        </div>
+      </section>
+    {{ end }}
+
+    {{ if gt (len $unknown) 0 }}
+      <section class="mb-10">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-xl font-semibold">Other</h2>
+          <span class="text-sm text-neutral-500">{{ len $unknown }}</span>
+        </div>
+        <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {{ range $unknown }}
+            {{ partial "project-card.html" . }}
+          {{ end }}
+        </div>
+      </section>
+    {{ end }}
+
+  {{ end }}
+{{ end }}
