@@ -1,9 +1,15 @@
 ---
 title: "Workbench Build"
 date: 2025-12-31
-tags: ["woodworking", "garage"]
+summary: "Heavy-duty workbench with storage."
+tags: ["woodworking","garage"]
 status: "in-progress"
-summary: "A sturdy DIY workbench for future projects."
+links:
+  - name: "Build Log"
+    url: "/posts/workbench-build/"
+  - name: "Materials"
+    url: "https://example.com"
+cover: "img/projects/workbench.jpg"
 ---
 
 ## Goal
