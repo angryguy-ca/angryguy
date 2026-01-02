@@ -1,0 +1,51 @@
+{{ define "main" }}
+
+  {{/* --------------------------------
+     HERO / background (match Articles)
+     -------------------------------- */}}
+  {{ if site.Params.article.showHero | default false }}
+    {{ $heroStyle := print "hero/" (site.Params.article.heroStyle | default "basic") ".html" }}
+    {{ if templates.Exists (printf "partials/%s" $heroStyle) }}
+      {{ partial $heroStyle . }}
+    {{ else }}
+      {{ partial "hero/basic.html" . }}
+    {{ end }}
+  {{ end }}
+
+  {{ $docsRoot := site.GetPage "section" "docs" }}
+
+  <div class="mx-auto w-full max-w-6xl">
+    <div class="docs-page">
+      <div class="docs-shell">
+        <aside class="docs-sidebar">
+          <div class="mb-3 text-xs uppercase tracking-wide text-neutral-500">Contents</div>
+          {{ $isOverview := eq .RelPermalink $docsRoot.RelPermalink }}
+          <a href="{{ $docsRoot.RelPermalink }}" data-docs-overview class="block rounded-md px-2 py-1 text-sm transition-colors {{ if $isOverview }}text-neutral-900 dark:text-neutral-100 font-semibold bg-neutral-100/80 dark:bg-neutral-800/60{{ else }}text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100/80 dark:hover:bg-neutral-800/60{{ end }}">
+            Overview
+          </a>
+          {{ partial "docs-nav.html" (dict "section" $docsRoot "current" .) }}
+        </aside>
+
+        <article class="docs-main min-w-0">
+          <div class="docs-topbar mb-6 border-b border-neutral-200/70 pb-6 dark:border-neutral-700/70">
+            <h1 class="text-3xl font-bold">{{ .Title }}</h1>
+            {{ with .Description }}
+              <p class="mt-2 text-base opacity-80">{{ . }}</p>
+            {{ else }}
+              {{ with .Params.summary }}
+                <p class="mt-2 text-base opacity-80">{{ . }}</p>
+              {{ end }}
+            {{ end }}
+          </div>
+
+          <div class="docs-scroll">
+            <div class="prose dark:prose-invert max-w-none">
+              {{ .Content }}
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+
+{{ end }}

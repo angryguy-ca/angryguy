@@ -9,7 +9,7 @@ links:
     url: "/posts/workbench-build/"
   - name: "Materials"
     url: "https://example.com"
-cover: "img/projects/workbench.jpg"
+cover: "/projects/workbench.jpg"
 ---
 
 ## Goal

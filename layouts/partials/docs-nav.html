@@ -1,0 +1,99 @@
+{{ $section := .section }}
+{{ $current := .current }}
+{{ $level := .level | default 0 }}
+
+{{ $baseClass := "block rounded-md px-2 py-1 text-sm transition-colors" }}
+{{ $activeClass := "text-neutral-900 dark:text-neutral-100 font-semibold bg-neutral-100/80 dark:bg-neutral-800/60" }}
+{{ $inactiveClass := "text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100/80 dark:hover:bg-neutral-800/60" }}
+
+{{ $isRoot := eq $level 0 }}
+
+<ul class="docs-nav space-y-1{{ if $isRoot }} docs-nav-root{{ end }}" {{ if $isRoot }}data-docs-nav{{ end }}>
+  {{ range $section.Sections.ByWeight }}
+    {{ $isCurrent := eq .RelPermalink $current.RelPermalink }}
+    {{ $isOpen := or $isCurrent ($current.IsDescendant .) }}
+    <li class="docs-nav-section" data-section-id="{{ .RelPermalink | urlize }}">
+      <details class="docs-nav-details" {{ if $isOpen }}open{{ end }}>
+        <summary class="docs-nav-summary">
+          <span class="docs-nav-caret" aria-hidden="true"></span>
+          <a href="{{ .RelPermalink }}" class="{{ $baseClass }} {{ if $isCurrent }}{{ $activeClass }}{{ else }}{{ $inactiveClass }}{{ end }}">
+            {{ .Title }}
+          </a>
+        </summary>
+        <div class="docs-nav-children">
+          {{ partial "docs-nav.html" (dict "section" . "current" $current "level" (add $level 1)) }}
+        </div>
+      </details>
+    </li>
+  {{ end }}
+
+  {{ range $section.RegularPages.ByWeight }}
+    {{ $isCurrent := eq .RelPermalink $current.RelPermalink }}
+    <li class="docs-nav-item">
+      <a href="{{ .RelPermalink }}" class="{{ $baseClass }} {{ if $isCurrent }}{{ $activeClass }}{{ else }}{{ $inactiveClass }}{{ end }}">
+        {{ .Title }}
+      </a>
+    </li>
+  {{ end }}
+</ul>
+
+{{ if $isRoot }}
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var navs = document.querySelectorAll("[data-docs-nav]");
+      navs.forEach(function (nav) {
+        var overviewLink = nav.closest("aside") && nav.closest("aside").querySelector("[data-docs-overview]");
+        var setFocus = function (sectionId) {
+          if (sectionId) {
+            nav.dataset.activeSection = sectionId;
+            nav.classList.add("docs-nav-focus");
+            nav.querySelectorAll(".docs-nav-section.docs-nav-active").forEach(function (item) {
+              item.classList.remove("docs-nav-active");
+            });
+            var active = nav.querySelector('.docs-nav-section[data-section-id="' + sectionId + '"]');
+            if (active) {
+              active.classList.add("docs-nav-active");
+            }
+          } else {
+            nav.removeAttribute("data-active-section");
+            nav.classList.remove("docs-nav-focus");
+            nav.querySelectorAll(".docs-nav-section.docs-nav-active").forEach(function (item) {
+              item.classList.remove("docs-nav-active");
+            });
+          }
+        };
+
+        var openSection = nav.querySelector(".docs-nav-section details[open]");
+        if (openSection) {
+          var openLi = openSection.closest(".docs-nav-section");
+          if (openLi && openLi.dataset.sectionId) {
+            setFocus(openLi.dataset.sectionId);
+          }
+        }
+
+        nav.querySelectorAll(".docs-nav-summary").forEach(function (summary) {
+          summary.addEventListener("click", function () {
+            var details = summary.closest("details");
+            var section = summary.closest(".docs-nav-section");
+            if (!details || !section) {
+              return;
+            }
+            setTimeout(function () {
+              if (details.open && section.dataset.sectionId) {
+                setFocus(section.dataset.sectionId);
+              } else {
+                setFocus("");
+              }
+            }, 0);
+          });
+        });
+
+        if (overviewLink) {
+          overviewLink.addEventListener("click", function () {
+            setFocus("");
+          });
+        }
+      });
+    });
+  </script>
+{{ end }}

@@ -127,3 +127,87 @@
 td {
     vertical-align: middle !important;
 }
+
+.docs-shell {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.docs-nav {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.docs-nav-details {
+    margin: 0;
+}
+
+.docs-nav-summary {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    cursor: pointer;
+    list-style: none;
+}
+
+.docs-nav-summary::-webkit-details-marker {
+    display: none;
+}
+
+.docs-nav-summary a {
+    font-weight: 600;
+}
+
+.docs-nav-children {
+    margin-left: 0.75rem;
+    padding-left: 0.75rem;
+}
+
+.docs-nav.docs-nav-focus > .docs-nav-section,
+.docs-nav.docs-nav-focus > .docs-nav-item {
+    display: none;
+}
+
+.docs-nav.docs-nav-focus > .docs-nav-section.docs-nav-active {
+    display: block;
+}
+
+.docs-nav.docs-nav-focus > .docs-nav-section.docs-nav-active > .docs-nav-details > .docs-nav-summary {
+    margin-bottom: 0.25rem;
+}
+
+.docs-nav.docs-nav-focus > .docs-nav-section.docs-nav-active > .docs-nav-details > .docs-nav-children {
+    margin-top: 0.35rem;
+}
+
+.docs-nav-caret {
+    width: 1rem;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.docs-nav-caret::before {
+    content: "+";
+}
+
+.docs-nav-details[open] .docs-nav-caret::before {
+    content: "-";
+}
+
+@media (min-width: 1024px) {
+    .docs-shell {
+        display: grid;
+        grid-template-columns: 260px minmax(0, 1fr);
+        align-items: start;
+    }
+
+    .docs-sidebar {
+        position: sticky;
+        top: 6rem;
+        max-height: calc(100vh - 6rem);
+        overflow-y: auto;
+        padding-right: 0.25rem;
+    }
+}
