@@ -9,8 +9,8 @@ title = "Angryguy"
   isoCode = "en"
   rtl = false
   dateFormat = "2006-01-02"
-  logo = "img/logo_banner.png"
-  secondaryLogo = "img/logo_banner.png"
+  logo = "img/logo_banner_L.png"
+  secondaryLogo = "img/logo_banner_L.png"
   description = "Angryguy | Steve Snow"
   copyright = "&copy; 2025 Angryguy.ca "
 
